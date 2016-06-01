@@ -15,7 +15,7 @@
 		<url>http://www.spring.io</url>
 	</organization>
 	<properties>
-		<main.basedir>${basedir}/..</main.basedir>
+		<main.basedir>${basedir}/../..</main.basedir>
 		<start-class>org.springframework.boot.cli.SpringCli</start-class>
 		<spring.profiles.active>default</spring.profiles.active>
 		<generated.pom.dir>${project.build.directory}/generated-resources/org/springframework/boot/cli/compiler/dependencies</generated.pom.dir>

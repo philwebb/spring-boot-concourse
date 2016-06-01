@@ -18,7 +18,7 @@
 		<url>http://www.spring.io</url>
 	</organization>
 	<properties>
-		<main.basedir>${basedir}/../..</main.basedir>
+		<main.basedir>${basedir}/../../..</main.basedir>
 	</properties>
 	<dependencies>
 		<dependency>

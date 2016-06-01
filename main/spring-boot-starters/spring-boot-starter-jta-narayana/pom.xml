@@ -12,7 +12,7 @@
 	<description>Spring Boot Narayana JTA Starter</description>
 	<url>http://projects.spring.io/spring-boot/</url>
 	<properties>
-		<main.basedir>${basedir}/../..</main.basedir>
+		<main.basedir>${basedir}/../../..</main.basedir>
 	</properties>
 	<dependencies>
 		<dependency>
