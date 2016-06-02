@@ -570,8 +570,7 @@
 					</systemPropertyVariables>
 					<argLine>-Xmx1024m</argLine>
 					<printSummary>true</printSummary>
-					<parallel>classes</parallel>
-					<threadCount>8</threadCount>
+					<forkCount>4</forkCount>
 				</configuration>
 			</plugin>
 			<plugin>
