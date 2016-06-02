@@ -102,12 +102,15 @@ public class LogbackLoggingSystem extends Slf4JLoggingSystem {
 	@Override
 	public void initialize(LoggingInitializationContext initializationContext,
 			String configLocation, LogFile logFile) {
-		getLogger(null).getLoggerContext().getTurboFilterList().remove(FILTER);
-		super.initialize(initializationContext, configLocation, logFile);
-		if (StringUtils.hasText(System.getProperty(CONFIGURATION_FILE_PROPERTY))) {
-			getLogger(LogbackLoggingSystem.class.getName()).warn(
-					"Ignoring '" + CONFIGURATION_FILE_PROPERTY + "' system property. "
-							+ "Please use 'logging.config' instead.");
+		LoggerContext loggerContext = getLogger(null).getLoggerContext();
+		synchronized (loggerContext.getConfigurationLock()) {
+			loggerContext.getTurboFilterList().remove(FILTER);
+			super.initialize(initializationContext, configLocation, logFile);
+			if (StringUtils.hasText(System.getProperty(CONFIGURATION_FILE_PROPERTY))) {
+				getLogger(LogbackLoggingSystem.class.getName()).warn(
+						"Ignoring '" + CONFIGURATION_FILE_PROPERTY + "' system property. "
+								+ "Please use 'logging.config' instead.");
+			}
 		}
 	}
 
@@ -115,14 +118,16 @@ public class LogbackLoggingSystem extends Slf4JLoggingSystem {
 	protected void loadDefaults(LoggingInitializationContext initializationContext,
 			LogFile logFile) {
 		LoggerContext context = getLoggerContext();
-		stopAndReset(context);
-		LogbackConfigurator configurator = new LogbackConfigurator(context);
-		context.putProperty("LOG_LEVEL_PATTERN",
-				initializationContext.getEnvironment().resolvePlaceholders(
-						"${logging.pattern.level:${LOG_LEVEL_PATTERN:%5p}}"));
-		new DefaultLogbackConfiguration(initializationContext, logFile)
-				.apply(configurator);
-		context.setPackagingDataEnabled(true);
+		synchronized (context.getConfigurationLock()) {
+			stopAndReset(context);
+			LogbackConfigurator configurator = new LogbackConfigurator(context);
+			context.putProperty("LOG_LEVEL_PATTERN",
+					initializationContext.getEnvironment().resolvePlaceholders(
+							"${logging.pattern.level:${LOG_LEVEL_PATTERN:%5p}}"));
+			new DefaultLogbackConfiguration(initializationContext, logFile)
+					.apply(configurator);
+			context.setPackagingDataEnabled(true);
+		}
 	}
 
 	@Override
@@ -179,7 +184,9 @@ public class LogbackLoggingSystem extends Slf4JLoggingSystem {
 		LevelChangePropagator levelChangePropagator = new LevelChangePropagator();
 		levelChangePropagator.setResetJUL(true);
 		levelChangePropagator.setContext(loggerContext);
-		loggerContext.addListener(levelChangePropagator);
+		synchronized (loggerContext.getConfigurationLock()) {
+			loggerContext.addListener(levelChangePropagator);
+		}
 	}
 
 	@Override
