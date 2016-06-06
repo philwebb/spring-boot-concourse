@@ -157,8 +157,7 @@ public class ExplodedArchiveTests {
 		assertThat(archive.getManifest()).isNotNull();
 		URLClassLoader loader = new URLClassLoader(new URL[] { archive.getUrl() });
 		assertThat(loader.getResourceAsStream("META-INF/spring/application.xml"))
-				.as("getResourceAsStream from " + root.getAbsoluteFile()).isNotNull()
-				.isNull();
+				.as("getResourceAsStream from " + root.getAbsoluteFile()).isNotNull();
 		loader.close();
 	}
 
