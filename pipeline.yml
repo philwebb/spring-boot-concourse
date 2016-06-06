@@ -1,0 +1,17 @@
+# Concouse CI Pipeline definition for Spring Boot
+
+resources:
+- name: java-8-jdk-alpine
+  type: docker-image
+    source:
+      repository: java
+      tag:        8-jdk-alpine
+
+jobs:
+- name: base-docker-image
+  plan:
+    - get: java-8-jdk-alpine
+      trigger: true
+  - put: cf-java-client-latest
+    params:
+      build: docker-image/ci/docker-image
