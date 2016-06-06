@@ -25,6 +25,7 @@ import de.flapdoodle.embed.mongo.config.IMongodConfig;
 import de.flapdoodle.embed.mongo.config.Storage;
 import de.flapdoodle.embed.mongo.distribution.Feature;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -51,6 +52,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class EmbeddedMongoAutoConfigurationTests {
 
 	private AnnotationConfigApplicationContext context;
+
+	@Before
+	public void debug() {
+		// FIXME
+		System.err.println(System.getProperty("user.home"));
+	}
 
 	@After
 	public void close() {
