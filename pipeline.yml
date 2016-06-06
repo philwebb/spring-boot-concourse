@@ -6,14 +6,14 @@ resources:
   source:
     uri:    https://github.com/philwebb/spring-boot-concourse.git
     branch: master
-  paths:
+    paths:
     - ci/docker-image/*
 
 - name: java-8-jdk-alpine
   type: docker-image
-    source:
-      repository: java
-      tag:        8-jdk-alpine
+  source:
+    repository: java
+    tag:        8-jdk-alpine
 
 - name: spring-boot-ci
   type: docker-image
@@ -26,7 +26,8 @@ resources:
 jobs:
 - name: docker-image
   plan:
-    get: docker-image
+  - aggregate:
+    - get: docker-image
       trigger: true
     - get: java-8-jdk-alpine
       trigger: true
