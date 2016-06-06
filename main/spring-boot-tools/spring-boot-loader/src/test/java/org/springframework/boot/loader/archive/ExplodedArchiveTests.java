@@ -152,12 +152,13 @@ public class ExplodedArchiveTests {
 
 	@Test
 	public void getResourceAsStream() throws Exception {
-		ExplodedArchive archive = new ExplodedArchive(
-				new File("src/test/resources/root"));
+		File root = new File("src/test/resources/root");
+		ExplodedArchive archive = new ExplodedArchive(root);
 		assertThat(archive.getManifest()).isNotNull();
 		URLClassLoader loader = new URLClassLoader(new URL[] { archive.getUrl() });
 		assertThat(loader.getResourceAsStream("META-INF/spring/application.xml"))
-				.isNotNull();
+				.as("getResourceAsStream from " + root.getAbsoluteFile()).isNotNull()
+				.isNull();
 		loader.close();
 	}
 
