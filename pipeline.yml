@@ -1,17 +1,35 @@
 # Concouse CI Pipeline definition for Spring Boot
 
 resources:
+- name: docker-image
+  type: git
+  source:
+    uri:    https://github.com/philwebb/spring-boot-concourse.git
+    branch: master
+  paths:
+    - ci/docker-image/*
+
 - name: java-8-jdk-alpine
   type: docker-image
     source:
       repository: java
       tag:        8-jdk-alpine
 
+- name: spring-boot-ci
+  type: docker-image
+  source:
+    repository: springboot/spring-boot-ci
+    email:      {{docker-email}}
+    username:   {{docker-username}}
+    password:   {{docker-password}}
+
 jobs:
-- name: base-docker-image
+- name: docker-image
   plan:
+    get: docker-image
+      trigger: true
     - get: java-8-jdk-alpine
       trigger: true
-  - put: cf-java-client-latest
+  - put: spring-boot-ci
     params:
       build: docker-image/ci/docker-image
