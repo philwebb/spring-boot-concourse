@@ -10,4 +10,4 @@ inputs:
 - name: ci
 
 run:
-  path: ci/build-main.sh
+  path: spring-boot/ci/build-main.sh

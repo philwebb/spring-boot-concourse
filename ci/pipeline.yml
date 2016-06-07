@@ -60,11 +60,8 @@ jobs:
       build: ci-base-docker-build/ci/docker-builds/base
 
 - name: build-main
-  plain:
-  - aggregate:
-    - get: spring-boot
-      trigger: true
-    - get: ci-base-docker-image
-      trigger: true
+  plan:
+  - get: spring-boot
+    trigger: true
   - task: build-main
-    file: source-boot/ci/unit-test.yml
+    file: spring-boot/ci/build-main.yml
