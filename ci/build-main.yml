@@ -10,7 +10,4 @@ inputs:
 - name: spring-boot
 
 run:
-  path: ls
-  args: [spring-boot/ci, -l]
-
-#  path: spring-boot/ci/build-main.sh
+  path: spring-boot/ci/build-main.sh
