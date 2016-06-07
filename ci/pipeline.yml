@@ -7,7 +7,7 @@ resources:
     repository: java
     tag:        8-jdk
 
-- name: base-docker-build
+- name: ci-base-docker-build
   type: git
   source:
     uri:    https://github.com/philwebb/spring-boot-concourse.git
@@ -23,7 +23,7 @@ resources:
     paths:
     - ci/docker-builds/ci/*
 
-- name: base-docker-image
+- name: ci-base-docker-image
   type: docker-image
   source:
     repository: springboot/ci-base-{{branch}}
@@ -34,19 +34,19 @@ resources:
 - name: ci-docker-image
   type: docker-image
   source:
-    repository: springboot/ci--{{branch}}
+    repository: springboot/ci-{{branch}}
     email:      {{docker-email}}
     username:   {{docker-username}}
     password:   {{docker-password}}
 
 jobs:
-- name: docker-image
+- name: ci-base-docker-image
   plan:
   - aggregate:
-    - get: docker-image
+    - get: java-docker-image
       trigger: true
-    - get: java-8-jdk
+    - get: ci-docker-build
       trigger: true
-  - put: spring-boot-ci
+  - put: ci-base-docker-image
     params:
-      build: docker-image/ci/docker-image
+      build: ci-base-docker-build/ci/docker-builds/base
