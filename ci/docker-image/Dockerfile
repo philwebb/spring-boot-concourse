@@ -1,6 +1,5 @@
-FROM java:8-jdk-alpine
+FROM java:8-jdk
 
-RUN apk add --update \
-    bash \
-    git \
- && rm -rf /var/cache/apk/*
+RUN \
+apt-get update && \
+apt-get install -y git
