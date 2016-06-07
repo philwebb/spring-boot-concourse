@@ -9,11 +9,11 @@ resources:
     paths:
     - ci/docker-image/*
 
-- name: java-8-jdk-alpine
+- name: java-8-jdk
   type: docker-image
   source:
     repository: java
-    tag:        8-jdk-alpine
+    tag:        8-jdk
 
 - name: spring-boot-ci
   type: docker-image
@@ -29,7 +29,7 @@ jobs:
   - aggregate:
     - get: docker-image
       trigger: true
-    - get: java-8-jdk-alpine
+    - get: java-8-jdk
       trigger: true
   - put: spring-boot-ci
     params:
