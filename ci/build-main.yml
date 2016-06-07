@@ -7,7 +7,7 @@ image_resource:
     repository: springboot/ci-base-8-jdk
 
 inputs:
-- name: ci
+- name: spring-boot
 
 run:
   path: spring-boot/ci/build-main.sh
