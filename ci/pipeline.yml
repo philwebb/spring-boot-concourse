@@ -1,11 +1,12 @@
 # Concouse CI Pipeline definition for Spring Boot
 
 resources:
-- name: java-docker-image
-  type: docker-image
+- name: spring-boot
+  type: git
   source:
-    repository: java
-    tag:        8-jdk
+    uri:    https://github.com/philwebb/spring-boot-concourse.git
+    branch: {{branch}}
+    ignore_paths: ci/docker-builds/*
 
 - name: ci-base-docker-build
   type: git
@@ -23,10 +24,16 @@ resources:
     paths:
     - ci/docker-builds/ci/*
 
+- name: java-docker-image
+  type: docker-image
+  source:
+    repository: java
+    tag:        8-jdk
+
 - name: ci-base-docker-image
   type: docker-image
   source:
-    repository: springboot/ci-base-{{branch}}
+    repository: springboot/ci-base-8-jdk
     email:      {{docker-email}}
     username:   {{docker-username}}
     password:   {{docker-password}}
@@ -34,7 +41,7 @@ resources:
 - name: ci-docker-image
   type: docker-image
   source:
-    repository: springboot/ci-{{branch}}
+    repository: springboot/ci-8-jdk
     email:      {{docker-email}}
     username:   {{docker-username}}
     password:   {{docker-password}}
@@ -45,8 +52,14 @@ jobs:
   - aggregate:
     - get: java-docker-image
       trigger: true
-    - get: ci-docker-build
+    - get: ci-base-docker-build
       trigger: true
   - put: ci-base-docker-image
     params:
       build: ci-base-docker-build/ci/docker-builds/base
+
+- name: build-main
+  plain:
+    get: spring-boot
+  task: build-main
+  file: source-boot/ci/unit-test.yml
