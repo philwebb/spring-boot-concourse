@@ -4,7 +4,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: springboot/ci-8-jdk
+    repository: springboot/ci-base-8-jdk
 
 inputs:
 - name: ci

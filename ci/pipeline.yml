@@ -4,7 +4,7 @@ resources:
 - name: spring-boot
   type: git
   source:
-    uri:    https://github.com/philwebb/spring-boot-concourse.git
+    uri: https://github.com/philwebb/spring-boot-concourse.git
     branch: {{branch}}
     ignore_paths:
     - ci/docker-builds/*
@@ -12,7 +12,7 @@ resources:
 - name: ci-base-docker-build
   type: git
   source:
-    uri:    https://github.com/philwebb/spring-boot-concourse.git
+    uri: https://github.com/philwebb/spring-boot-concourse.git
     branch: {{branch}}
     paths:
     - ci/docker-builds/base/*
@@ -20,7 +20,7 @@ resources:
 - name: ci-docker-build
   type: git
   source:
-    uri:    https://github.com/philwebb/spring-boot-concourse.git
+    uri: https://github.com/philwebb/spring-boot-concourse.git
     branch: {{branch}}
     paths:
     - ci/docker-builds/ci/*
@@ -66,5 +66,5 @@ jobs:
       trigger: true
     - get: ci-base-docker-image
       trigger: true
-  task: build-main
-  file: source-boot/ci/unit-test.yml
+  - task: build-main
+    file: source-boot/ci/unit-test.yml
