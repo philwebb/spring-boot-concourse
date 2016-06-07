@@ -60,6 +60,7 @@ jobs:
 
 - name: build-main
   plain:
-    get: spring-boot
+  - get: spring-boot
+    trigger: true
   task: build-main
   file: source-boot/ci/unit-test.yml
