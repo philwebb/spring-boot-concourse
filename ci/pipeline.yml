@@ -1,0 +1,67 @@
+# Concouse CI Pipeline definition for Spring Boot
+
+resources:
+- name: spring-boot
+  type: git
+  source:
+    uri: https://github.com/philwebb/spring-boot-concourse.git
+    branch: {{branch}}
+    ignore_paths:
+    - ci/docker-builds/*
+
+- name: ci-base-docker-build
+  type: git
+  source:
+    uri: https://github.com/philwebb/spring-boot-concourse.git
+    branch: {{branch}}
+    paths:
+    - ci/docker-builds/base/*
+
+- name: ci-docker-build
+  type: git
+  source:
+    uri: https://github.com/philwebb/spring-boot-concourse.git
+    branch: {{branch}}
+    paths:
+    - ci/docker-builds/ci/*
+
+- name: java-docker-image
+  type: docker-image
+  source:
+    repository: java
+    tag:        8-jdk
+
+- name: ci-base-docker-image
+  type: docker-image
+  source:
+    repository: springboot/ci-base-8-jdk
+    email:      {{docker-email}}
+    username:   {{docker-username}}
+    password:   {{docker-password}}
+
+- name: ci-docker-image
+  type: docker-image
+  source:
+    repository: springboot/ci-8-jdk
+    email:      {{docker-email}}
+    username:   {{docker-username}}
+    password:   {{docker-password}}
+
+jobs:
+- name: ci-base-docker-image
+  plan:
+  - aggregate:
+    - get: java-docker-image
+      trigger: true
+    - get: ci-base-docker-build
+      trigger: true
+  - put: ci-base-docker-image
+    params:
+      build: ci-base-docker-build/ci/docker-builds/base
+
+- name: build-main
+  plan:
+  - get: spring-boot
+    trigger: true
+  - task: build-main
+    file: spring-boot/ci/build-main.yml

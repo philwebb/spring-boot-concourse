@@ -36,3 +36,4 @@ overridedb.*
 .factorypath
 dump.rdb
 transaction-logs
+pipeline-secrets.yml
