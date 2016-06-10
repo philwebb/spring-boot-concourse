@@ -5,7 +5,6 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-parent</artifactId>
 		<version>1.4.0.BUILD-SNAPSHOT</version>
-		<relativePath>../spring-boot-parent</relativePath>
 	</parent>
 	<artifactId>spring-boot-test-autoconfigure</artifactId>
 	<name>Spring Boot Test Auto-Configure</name>
@@ -16,7 +15,7 @@
 		<url>http://www.spring.io</url>
 	</organization>
 	<properties>
-		<main.basedir>${basedir}/..</main.basedir>
+		<main.basedir>${basedir}/../..</main.basedir>
 	</properties>
 	<dependencies>
 		<!-- Compile -->
