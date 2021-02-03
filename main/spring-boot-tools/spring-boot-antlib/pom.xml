@@ -16,7 +16,7 @@
 	</organization>
 	<properties>
 		<main.basedir>${basedir}/../../..</main.basedir>
-		<ant.version>1.9.3</ant.version>
+		<ant.version>1.10.9</ant.version>
 	</properties>
 	<dependencies>
 		<dependency>
