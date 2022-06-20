@@ -126,7 +126,7 @@
 		<mariadb.version>1.4.5</mariadb.version>
 		<mockito.version>1.10.19</mockito.version>
 		<mongodb.version>3.2.2</mongodb.version>
-		<mysql.version>5.1.39</mysql.version>
+		<mysql.version>8.0.28</mysql.version>
 		<narayana.version>5.3.2.Final</narayana.version>
 		<nekohtml.version>1.9.22</nekohtml.version>
 		<neo4j-ogm.version>2.0.2</neo4j-ogm.version>
